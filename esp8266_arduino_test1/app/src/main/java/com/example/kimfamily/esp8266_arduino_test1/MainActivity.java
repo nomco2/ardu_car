@@ -6,9 +6,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -23,6 +31,8 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.example.kimfamily.esp8266_arduino_test1.Movable_Layout_Class;
+
 public class MainActivity extends Activity implements View.OnClickListener {
 
     public final static String PREF_IP = "PREF_IP_ADDRESS";
@@ -34,6 +44,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     // type them next time he/she opens the app.
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
+
+
+    /************동적 버튼 생성 *************/
+    private Button button_creat;
+    private Button button_hold;
+    private ViewGroup mainLayout;
+    private int creating_button_number = 10;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +79,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
         // put an empty string "" is this is the first time.
         editTextIPAddress.setText(sharedPreferences.getString(PREF_IP,""));
         editTextPortNumber.setText(sharedPreferences.getString(PREF_PORT,""));
+
+
+        /***************동적 버튼 생성**************/
+        button_creat = (Button) findViewById(R.id.button_creat);
+        button_hold = (Button) findViewById(R.id.button_hold);
+        button_creat.setOnClickListener(this);
+        button_hold.setOnClickListener(this);
+
+        mainLayout = (RelativeLayout) findViewById(R.id.main);
+
+
     }
 
 
@@ -89,11 +118,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         {
             parameterValue = "12";
         }
-        else
+        else if(view.getId()==buttonPin13.getId())
         {
             parameterValue = "13";
         }
-
 
 
         // execute HTTP request
@@ -102,6 +130,64 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     view.getContext(), parameterValue, ipAddress, portNumber, "pin"
             ).execute();
         }
+
+
+        /*************동적 버튼 생성 ****************/
+        if(view.getId()==button_creat.getId())
+        {
+
+            LinearLayout new_linear = new LinearLayout(this);
+            new_linear.setId(creating_button_number + 0);
+//            new_frames.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_basic_boundary));
+
+            Button new_buttons = new Button(this);
+            new_buttons.setId(creating_button_number + 1);
+            new_buttons.setText("button" + creating_button_number/10);
+            new_buttons.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            TextView new_texts = new TextView(this);
+            new_texts.setId(creating_button_number + 2);
+            new_texts.setText("이동 손잡이");
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.CENTER;
+            new_linear.setOrientation(LinearLayout.VERTICAL);
+            new_linear.setLayoutParams(params);
+
+
+//            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(new_buttons.getWidth(), new_buttons.getHeight());
+//            new_frames.setLayoutParams(params);
+
+
+            String[] new_buttons_location = new String[2];
+            new_buttons_location[0] = "new_button_x" + creating_button_number;
+            new_buttons_location[1] = "new_button_y" + creating_button_number;
+//            String new_button_scale = "new_button_scale" + creating_button_number;
+            Movable_Layout_Class new_movable_button =  new Movable_Layout_Class(this, mainLayout, new_linear, new_buttons_location);
+
+            creating_button_number += 10; //10단위로 id 셋 구분함
+
+            new_linear.addView(new_buttons);
+            new_linear.addView(new_texts);
+            mainLayout.addView(new_linear);
+
+        }
+
+        /*******************동적 생성된 버튼 홀드*****************/
+        if(view.getId()==button_hold.getId()) {
+            for(int i = 10; i<creating_button_number; i += 10){
+                try {
+                    TextView new_texts = (TextView) findViewById(i + 2);
+                    new_texts.setVisibility(View.INVISIBLE);
+                }catch (Exception e){
+
+                }
+            }
+
+        }
+
+
+
     }
 
     /**
