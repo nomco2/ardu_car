@@ -23,8 +23,8 @@ void setup()
   digitalWrite(10,LOW);
    
   sendCommand("AT+RST\r\n",2000,DEBUG); // reset module
-  sendCommand("AT+CWMODE=1\r\n",1000,DEBUG); // configure as access point
-  sendCommand("AT+CWJAP=\"I-GEOSCAN\",\"zzzzzzzz\"\r\n",3000,DEBUG);
+  sendCommand("AT+CWMODE=3\r\n",1000,DEBUG); // configure as access point
+//  sendCommand("AT+CWJAP=\"I-GEOSCAN\",\"zzzzzzzz\"\r\n",3000,DEBUG);
   delay(10000);
   sendCommand("AT+CIFSR\r\n",1000,DEBUG); // get ip address
   sendCommand("AT+CIPMUX=1\r\n",1000,DEBUG); // configure for multiple connections

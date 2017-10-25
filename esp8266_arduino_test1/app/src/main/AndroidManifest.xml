@@ -18,6 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Algorithm_dev_activity"
+            android:screenOrientation="landscape">
+
+        </activity>
+
+
+
     </application>
 
 </manifest>

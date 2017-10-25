@@ -3,20 +3,19 @@ package com.example.kimfamily.esp8266_arduino_test1;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -30,8 +29,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import com.example.kimfamily.esp8266_arduino_test1.Movable_Layout_Class;
+import com.example.kimfamily.esp8266_arduino_test1.Shared_preference_for_saving_array_class;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -49,8 +50,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
     /************동적 버튼 생성 *************/
     private Button button_creat;
     private Button button_hold;
+    private Button test_btn;
     private ViewGroup mainLayout;
     private int creating_button_number = 10;
+
+    Shared_preference_for_saving_array_class shared_preference_for_saving_array_class;
 
 
     @Override
@@ -84,10 +88,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         /***************동적 버튼 생성**************/
         button_creat = (Button) findViewById(R.id.button_creat);
         button_hold = (Button) findViewById(R.id.button_hold);
+        test_btn = (Button) findViewById(R.id.test_btn);
         button_creat.setOnClickListener(this);
         button_hold.setOnClickListener(this);
-
+        test_btn.setOnClickListener(this);
         mainLayout = (RelativeLayout) findViewById(R.id.main);
+
+
 
 
     }
@@ -144,6 +151,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             new_buttons.setId(creating_button_number + 1);
             new_buttons.setText("button" + creating_button_number/10);
             new_buttons.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            new_buttons.setOnClickListener(this);
 
             TextView new_texts = new TextView(this);
             new_texts.setId(creating_button_number + 2);
@@ -187,8 +195,40 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
 
+        /*********** 동적 생성된 버튼 intent로 화면 넘기기 **************/
+        try {
+            for(int i = 10; i<creating_button_number; i += 10) {
+                if (view.getId() == i + 1) {
+                    Toast.makeText(this, "버튼" + creating_button_number/10, Toast.LENGTH_SHORT).show();
+                    //알고리즘 세팅 엑티비티로 넘어감
+                    Intent intent = new Intent(MainActivity.this, Algorithm_dev_activity.class);
+                    startActivity(intent);
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(this, e + "", Toast.LENGTH_LONG).show();
+        }
 
-    }
+        if(view.getId()==test_btn.getId()) {
+            String names[] = {  "맹구",
+                    "배용준",
+                    "땡칠이",
+                    "장동건",
+                    "강수정",
+                    "송창식",
+                    "황당해",
+                    "고은아"};
+            ArrayList<String> list = new ArrayList<String>(Arrays.asList(names));
+
+            shared_preference_for_saving_array_class.setStringArrayPref(this, "test1", list);
+
+            ArrayList<String> b = new ArrayList<String>();
+            b = shared_preference_for_saving_array_class.getStringArrayPref(this, "test1");
+            Toast.makeText(this, b + "", Toast.LENGTH_LONG).show();
+        }
+
+
+    } //on click listener end
 
     /**
      * Description: Send an HTTP Get request to a specified ip address and port.
