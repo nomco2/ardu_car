@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.example.kimfamily.esp8266_arduino_test1.Shared_preference_for_saving_array_class;
+import com.example.kimfamily.esp8266_arduino_test1.MacAdress_get;
+
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -41,6 +43,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     // declare buttons and text inputs
     private Button buttonPin11,buttonPin12,buttonPin13;
     private EditText editTextIPAddress, editTextPortNumber;
+    private EditText writing_data;
+    private TextView mac_address;
     // shared preferences objects used to save the IP address and port so that the user doesn't have to
     // type them next time he/she opens the app.
     SharedPreferences.Editor editor;
@@ -55,6 +59,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private int creating_button_number = 10;
 
     Shared_preference_for_saving_array_class shared_preference_for_saving_array_class;
+    MacAdress_get macAdress_get;
+
+    private String mac_adress;
 
 
     @Override
@@ -73,6 +80,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         // assign text inputs
         editTextIPAddress = (EditText)findViewById(R.id.editTextIPAddress);
         editTextPortNumber = (EditText)findViewById(R.id.editTextPortNumber);
+        mac_address = (TextView) findViewById(R.id.mac_address);
 
         // set button listener (this class)
         buttonPin11.setOnClickListener(this);
@@ -84,6 +92,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         editTextIPAddress.setText(sharedPreferences.getString(PREF_IP,""));
         editTextPortNumber.setText(sharedPreferences.getString(PREF_PORT,""));
 
+        //mac어드레스 가져오기
+        macAdress_get = new MacAdress_get();
+        mac_adress = "";
+        mac_adress = macAdress_get.getMACAddress(this, "wlan0");
+        Toast.makeText(this, mac_adress,Toast.LENGTH_LONG).show();
+
+
 
         /***************동적 버튼 생성**************/
         button_creat = (Button) findViewById(R.id.button_creat);
@@ -92,7 +107,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         button_creat.setOnClickListener(this);
         button_hold.setOnClickListener(this);
         test_btn.setOnClickListener(this);
+
+        writing_data = (EditText) findViewById(R.id.writing_data);
+
         mainLayout = (RelativeLayout) findViewById(R.id.main);
+
+
 
 
 
@@ -128,6 +148,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         else if(view.getId()==buttonPin13.getId())
         {
             parameterValue = "13";
+        }
+        else if(view.getId()==test_btn.getId()) {
+
+            parameterValue = writing_data.getText() + "";
+//            Toast.makeText(this,  + "", Toast.LENGTH_LONG).show();
         }
 
 
@@ -209,23 +234,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Toast.makeText(this, e + "", Toast.LENGTH_LONG).show();
         }
 
-        if(view.getId()==test_btn.getId()) {
-            String names[] = {  "맹구",
-                    "배용준",
-                    "땡칠이",
-                    "장동건",
-                    "강수정",
-                    "송창식",
-                    "황당해",
-                    "고은아"};
-            ArrayList<String> list = new ArrayList<String>(Arrays.asList(names));
 
-            shared_preference_for_saving_array_class.setStringArrayPref(this, "test1", list);
-
-            ArrayList<String> b = new ArrayList<String>();
-            b = shared_preference_for_saving_array_class.getStringArrayPref(this, "test1");
-            Toast.makeText(this, b + "", Toast.LENGTH_LONG).show();
-        }
 
 
     } //on click listener end

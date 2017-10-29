@@ -19,6 +19,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:text="mac_address"
+            android:id="@+id/mac_address" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="IP Address:"
             android:id="@+id/textView" />
 
@@ -26,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="e.g. 192.168.0.10"
+            android:text="192.168.4.1"
             android:id="@+id/editTextIPAddress" />
 
         <TextView
@@ -40,6 +48,7 @@
             android:inputType="number"
             android:ems="10"
             android:hint="e.g. 80"
+            android:text="80"
             android:id="@+id/editTextPortNumber" />
 
         <Button
@@ -71,10 +80,18 @@
             android:text="button_hold"
             android:id="@+id/button_hold" />
 
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="데이타 쓰시오"
+            android:text="10"
+            android:id="@+id/writing_data" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="test"
+            android:text="데이타 보내기"
             android:id="@+id/test_btn" />
     </LinearLayout>
 
