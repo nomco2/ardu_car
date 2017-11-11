@@ -15,8 +15,8 @@ import android.widget.Toast;
  */
 
 public class Movable_Layout_Class {
-    private int xDelta;
-    private int yDelta;
+    public int xDelta;
+    public int yDelta;
     private ViewGroup mainLayout;
     private ViewGroup mframe;
     private String[] mloaction_xy;
@@ -129,6 +129,8 @@ public class Movable_Layout_Class {
                 final int y = (int) event.getRawY();
 
 
+
+
                 if(is_movable_hold) { //위치 고정
                     switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
@@ -138,6 +140,16 @@ public class Movable_Layout_Class {
 
                             xDelta = x - lParams.leftMargin;
                             yDelta = y - lParams.topMargin;
+
+
+//                            mframe.setX(x - lParams.leftMargin);
+//                            if(mframe.getY() >10 && mframe.getY()<20){
+//                                mframe.setY(15);
+//                            }else{
+//                                mframe.setY(y - lParams.topMargin);
+//                            }
+//                            Toast.makeText(mainactivity_context, "x = " + x +",   set x = " + mframe.getX(),Toast.LENGTH_LONG).show();
+
                             break;
 
                         case MotionEvent.ACTION_UP:

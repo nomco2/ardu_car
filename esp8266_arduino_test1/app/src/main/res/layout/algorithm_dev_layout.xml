@@ -16,18 +16,16 @@
         <!-- 코딩 스케치 하는  부분 -->
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="#7FFFD4"
             android:layout_weight="0.7">
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="기능을 배치하세요.~~~~~~~~~~~~~~"
-                android:id="@+id/button_name" />
-
+                android:background="@drawable/operation_tray"/>
 
         </LinearLayout>
 
@@ -42,7 +40,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:layout_gravity="right"
+            android:background="#32CD32"
             android:orientation="vertical">
+
 
 
 
@@ -51,10 +51,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="왼쪽 모터 파워"/>
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/motor1_speed_btn"
+                    android:background="@drawable/motor1_speed_btn"/>
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -68,10 +69,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="오른쪽 모터 파워"/>
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/motor2_speed_btn"
+                    android:background="@drawable/motor2_speed_btn"/>
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -81,21 +83,22 @@
                     android:id="@+id/right_motor_power" />
             </LinearLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="모터 정지"
-                android:id="@+id/motor_stop" />
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/motor12_stop_btn"
+                android:background="@drawable/motor12_stop_btn"/>
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="서보모터 각도"/>
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/servo_motor_angle_btn"
+                    android:background="@drawable/servo_motor_angle_btn"/>
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -105,21 +108,22 @@
                     android:id="@+id/servo_motor_angle" />
             </LinearLayout>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="거리 값 = "
-                android:id="@+id/distance_value" />
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/distance_value"
+                android:background="@drawable/distance_value"/>
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="딜레이"/>
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/delay_btn"
+                    android:background="@drawable/delay_btn"/>
 
                 <EditText
                     android:layout_width="wrap_content"
