@@ -20,7 +20,9 @@ public class Movable_Layout_Class {
     private ViewGroup mainLayout;
     private ViewGroup mframe;
     private String[] mloaction_xy;
-    public boolean is_movable_hold = true;
+    public boolean is_movable_hold_temporary = false;
+    private boolean is_movable_hold_permanent = false;
+
 
     Context mainactivity_context;
     SharedPreferences location_savaer;
@@ -72,7 +74,8 @@ public class Movable_Layout_Class {
      * @param location_xy [String[]] to save the "you_want_moving_layout" of location x, y
      * @param scale_value_name the layout scale size value name : String
      */
-    public Movable_Layout_Class(Context from_mainAcviticy_context, ViewGroup form_mainAcitiviy_Layout, ViewGroup you_want_moving_layout, String[] location_xy, String scale_value_name){
+    public Movable_Layout_Class(Context from_mainAcviticy_context, ViewGroup form_mainAcitiviy_Layout, ViewGroup you_want_moving_layout,
+                                String[] location_xy, String scale_value_name, Boolean moving_hold_permanently){
         mainactivity_context = from_mainAcviticy_context;
         mainLayout = form_mainAcitiviy_Layout;
         mframe = you_want_moving_layout;
@@ -131,7 +134,7 @@ public class Movable_Layout_Class {
 
 
 
-                if(is_movable_hold) { //위치 고정
+                if(is_movable_hold_temporary) { //위치 고정
                     switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
                         case MotionEvent.ACTION_DOWN:
@@ -140,15 +143,6 @@ public class Movable_Layout_Class {
 
                             xDelta = x - lParams.leftMargin;
                             yDelta = y - lParams.topMargin;
-
-
-//                            mframe.setX(x - lParams.leftMargin);
-//                            if(mframe.getY() >10 && mframe.getY()<20){
-//                                mframe.setY(15);
-//                            }else{
-//                                mframe.setY(y - lParams.topMargin);
-//                            }
-//                            Toast.makeText(mainactivity_context, "x = " + x +",   set x = " + mframe.getX(),Toast.LENGTH_LONG).show();
 
                             break;
 

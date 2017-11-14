@@ -32,6 +32,7 @@ public class Algorithm_dev_activity extends Activity implements View.OnClickList
 
     private RelativeLayout dev_layout_main;
     private int creating_button_id_number = 100;
+    private int[][][] id_numbering_location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,13 @@ public class Algorithm_dev_activity extends Activity implements View.OnClickList
 
         dev_layout_main = (RelativeLayout) findViewById(R.id.dev_layout_main);
 
+
+        id_numbering_location = new int[20][100][2]; //[id번호], [그 번호에 생성된 번호 개수], [x,y주소]
         for(int i = 1; i < 7; i++){
-            button_creating_method(1, 10, 10);
+            LinearLayout new_Linear_layout = button_creating_method(i, 10, i*120, false);
+            id_numbering_location[i][0][0] = (int) new_Linear_layout.getX();
+            id_numbering_location[i][0][1] = (int) new_Linear_layout.getY();
+
         }
 
 
@@ -74,17 +80,17 @@ public class Algorithm_dev_activity extends Activity implements View.OnClickList
     };
 
 
-    private void button_creating_method(int id_numbers, int location_x, int location_y){
+    private LinearLayout button_creating_method(int id_numbers, int location_x, int location_y, Boolean moving_hold_permanently){
 
-        int this_layout_id_number = creating_button_id_number + id_numbers;
+        int this_layout_id_number = id_numbers;
 
 
         LinearLayout new_linear = new LinearLayout(getApplicationContext());
-        //        new_linear.setId(creating_button_number + 10);
-//            new_frames.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_basic_boundary));
+        new_linear.setId(this_layout_id_number);
+
 
         ImageView new_buttons = new ImageView(getApplicationContext());
-        new_buttons.setId(this_layout_id_number);
+//        new_buttons.setId(this_layout_id_number);
         select_background_img(new_buttons, this_layout_id_number); //백그라운드 레이아웃 id 번호에 따라서 알아서 배치
         new_buttons.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 //            new_buttons.setOnClickListener(new_creation_buttons);
@@ -108,8 +114,9 @@ public class Algorithm_dev_activity extends Activity implements View.OnClickList
         String[] new_buttons_location = new String[2];
         new_buttons_location[0] = "new_button_x" + this_layout_id_number;
         new_buttons_location[1] = "new_button_y" + this_layout_id_number;
+        String scale_size = "scale_size" + this_layout_id_number;
 //            String new_button_scale = "new_button_scale" + creating_button_number;
-        Movable_Layout_Class new_movable_button =  new Movable_Layout_Class(getApplicationContext(), dev_layout_main, new_linear, new_buttons_location);
+        Movable_Layout_Class new_movable_button =  new Movable_Layout_Class(getApplicationContext(), dev_layout_main, new_linear, new_buttons_location, scale_size, moving_hold_permanently);
 
 
         new_linear.addView(new_buttons);
@@ -117,6 +124,8 @@ public class Algorithm_dev_activity extends Activity implements View.OnClickList
         dev_layout_main.addView(new_linear);
         new_linear.setX(location_x);
         new_linear.setY(location_y);
+
+        return new_linear;
     }
 
 
